@@ -1,14 +1,11 @@
 package com.abdallah.seena.adapters;
 
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.abdallah.seena.R;
@@ -19,7 +16,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
- public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.HomeAdapterHolder> {
 
     private final List<Book> books = new ArrayList<>();
 
@@ -29,7 +26,6 @@ import java.util.List;
 
 
     private BookClick bookClick;
-
 
 
     public void addBooks(List<Book> modelList) {
@@ -48,10 +44,10 @@ import java.util.List;
     public void onBindViewHolder(@NonNull HomeAdapterHolder holder, int position) {
         Book book = books.get(position);
 
+        holder.itemView.setOnClickListener(v -> bookClick.onBookClick(book));
         holder.binding.tvTitle.setText(book.getTitle());
         holder.binding.tvAuthor.setText(book.getAuthor());
         holder.binding.tvPublisher.setText(book.getPublisher());
-
         Glide.with(holder.itemView).load(book.getBookImage()).into(holder.binding.imgBook);
 
 
@@ -77,6 +73,6 @@ import java.util.List;
     }
 
     public interface BookClick {
-        void onBookClick( Book books);
+        void onBookClick(Book books);
     }
 }

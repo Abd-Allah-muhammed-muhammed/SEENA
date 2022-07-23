@@ -1,17 +1,17 @@
 
 package com.abdallah.seena.model.home;
 
-import java.util.List;
- import com.google.gson.annotations.Expose;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
- public class Book {
+import java.util.List;
 
+public class Book implements Parcelable {
 
-
-
-
-     @SerializedName("rank")
+    @SerializedName("rank")
     @Expose
     private Integer rank;
     @SerializedName("rank_last_week")
@@ -90,7 +90,74 @@ import com.google.gson.annotations.SerializedName;
     @Expose
     private String bookUri;
 
-    public Integer getRank() {
+    protected Book(Parcel in) {
+        if (in.readByte() == 0) {
+            rank = null;
+        } else {
+            rank = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            rankLastWeek = null;
+        } else {
+            rankLastWeek = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            weeksOnList = null;
+        } else {
+            weeksOnList = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            asterisk = null;
+        } else {
+            asterisk = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            dagger = null;
+        } else {
+            dagger = in.readInt();
+        }
+        primaryIsbn10 = in.readString();
+        primaryIsbn13 = in.readString();
+        publisher = in.readString();
+        description = in.readString();
+        price = in.readString();
+        title = in.readString();
+        author = in.readString();
+        contributor = in.readString();
+        contributorNote = in.readString();
+        bookImage = in.readString();
+        if (in.readByte() == 0) {
+            bookImageWidth = null;
+        } else {
+            bookImageWidth = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            bookImageHeight = null;
+        } else {
+            bookImageHeight = in.readInt();
+        }
+        amazonProductUrl = in.readString();
+        ageGroup = in.readString();
+        bookReviewLink = in.readString();
+        firstChapterLink = in.readString();
+        sundayReviewLink = in.readString();
+        articleChapterLink = in.readString();
+        bookUri = in.readString();
+    }
+
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
+    public Integer  getRank() {
         return rank;
     }
 
@@ -298,4 +365,71 @@ import com.google.gson.annotations.SerializedName;
         this.bookUri = bookUri;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (rank == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(rank);
+        }
+        if (rankLastWeek == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(rankLastWeek);
+        }
+        if (weeksOnList == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(weeksOnList);
+        }
+        if (asterisk == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(asterisk);
+        }
+        if (dagger == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(dagger);
+        }
+        dest.writeString(primaryIsbn10);
+        dest.writeString(primaryIsbn13);
+        dest.writeString(publisher);
+        dest.writeString(description);
+        dest.writeString(price);
+        dest.writeString(title);
+        dest.writeString(author);
+        dest.writeString(contributor);
+        dest.writeString(contributorNote);
+        dest.writeString(bookImage);
+        if (bookImageWidth == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(bookImageWidth);
+        }
+        if (bookImageHeight == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(bookImageHeight);
+        }
+        dest.writeString(amazonProductUrl);
+        dest.writeString(ageGroup);
+        dest.writeString(bookReviewLink);
+        dest.writeString(firstChapterLink);
+        dest.writeString(sundayReviewLink);
+        dest.writeString(articleChapterLink);
+        dest.writeString(bookUri);
+    }
 }
